@@ -11,14 +11,15 @@ An animated birthday card that runs entirely in the browser. You write a letter,
 
 It works for one or two people (twins, best friends…), in French or English, with four color themes.
 
-**Live demo:** `https://<your-username>.github.io/<repo-name>/`
-**Make your own:** `https://<your-username>.github.io/<repo-name>/create.html`
+**Live demo:** [jean-emmanuel20.github.io/birthday-letter-maker](https://jean-emmanuel20.github.io/birthday-letter-maker/)
+**Make your own:** [create.html](https://jean-emmanuel20.github.io/birthday-letter-maker/create.html)
 
 ## How it works
 
 There's no backend and no database. `create.html` turns the form into JSON, compresses it with the browser's built-in `CompressionStream` (deflate), encodes it as base64url, and puts it after the `#` in the link:
 
-```
+```text.
+index.html, line 146: the linter wants the standard mask-composite
 index.html#d=z<compressed-base64url-json>
 ```
 

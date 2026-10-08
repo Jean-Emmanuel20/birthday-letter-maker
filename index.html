@@ -143,7 +143,7 @@ body.main-on .pair{animation:rise 1.4s 2.6s cubic-bezier(.2,.7,.2,1) forwards}
   box-shadow:inset 0 14px 18px -12px rgba(0,0,0,.35),inset 0 -14px 18px -12px rgba(0,0,0,.35)}
 .sheet::before{content:"";position:absolute;inset:12px;border-radius:4px;padding:2px;pointer-events:none;
   background:conic-gradient(from var(--ang),var(--a1),var(--a2),var(--a3),var(--a1),var(--a2),var(--a1));
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
   mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);animation:spin 6s linear infinite}
 .lhead{text-align:center}
 .crown{font-size:46px;display:inline-block;animation:bounce 2s ease-in-out infinite}
@@ -202,6 +202,13 @@ body.main-on .pair{animation:rise 1.4s 2.6s cubic-bezier(.2,.7,.2,1) forwards}
   opacity:0;visibility:hidden;transition:opacity .6s ease}
 body.main-on #mute{opacity:1;visibility:visible}
 #mute:focus-visible{outline:2px solid #fff;outline-offset:3px}
+#make{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:22;
+  font-family:var(--serif);font-weight:700;font-size:17px;color:#2a0510;text-decoration:none;
+  padding:11px 18px;border-radius:999px;background:linear-gradient(135deg,#ffe3a3,#e4b84f 45%,#ff8fa8);
+  box-shadow:0 8px 24px rgba(255,77,109,.35);opacity:0;visibility:hidden;transition:opacity .6s ease}
+body.main-on #make{opacity:1;visibility:visible}
+#overlay.show ~ #make{opacity:0;visibility:hidden}
+#make:focus-visible{outline:2px solid #fff;outline-offset:3px}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;transition-delay:0s!important}
@@ -238,6 +245,7 @@ body.main-on #mute{opacity:1;visibility:visible}
 </div>
 <button id="close" type="button"></button>
 <button id="mute" type="button" aria-label="Mute music">🔊</button>
+<a id="make" href="create.html"></a>
 <canvas id="fx" aria-hidden="true"></canvas>
 
 <script>
@@ -316,11 +324,11 @@ const UI_TEXT = {
   fr: { kicker:"Joyeux anniversaire", gateTitle:"Psst… {names}", gateSub:["J'ai un petit truc pour toi 👀","J'ai un petit truc pour vous 👀"],
         gateBtn:"Ouvrir la surprise 🎁", ageLine:"{age} ans aujourd'hui 🎉", ageShort:"{age} ans", tapEnvelope:"Touche ta lettre",
         tapSeal:"Touche le sceau", close:"✕ Refermer", blow:"Souffle tes bougies 🎂", wish:"Fais un vœu ✨", again:"Encore des feux d'artifice 🎆",
-        open:"Ouvrir la lettre de", seal:"Briser le sceau" },
+        open:"Ouvrir la lettre de", seal:"Briser le sceau", make:"Crée ta lettre 💌" },
   en: { kicker:"Happy Birthday", gateTitle:"Psst… {names}", gateSub:["I made something for you 👀","I made something for you two 👀"],
         gateBtn:"Open the surprise 🎁", ageLine:"{age} today 🎉", ageShort:"{age} today", tapEnvelope:"Tap your letter",
         tapSeal:"Tap the seal", close:"✕ Close", blow:"Blow out your candles 🎂", wish:"Make a wish ✨", again:"More fireworks 🎆",
-        open:"Open the letter for", seal:"Break the seal" }
+        open:"Open the letter for", seal:"Break the seal", make:"Make your own 💌" }
 };
 
 /* =====================================================================
@@ -395,6 +403,7 @@ $("kicker").textContent=UI.kicker;
 if(cfg.age) $("ageLine").innerHTML=emojify(esc(UI.ageLine.replace("{age}",cfg.age))); else $("ageLine").remove();
 if(cfg.date) $("dateLine").textContent=cfg.date; else $("dateLine").remove();
 $("close").textContent=UI.close;
+$("make").textContent=UI.make;
 $("tapSeal").textContent=UI.tapSeal;
 $("wax").setAttribute("aria-label",UI.seal);
 
