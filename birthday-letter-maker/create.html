@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Birthday Letter Maker 💌</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Jost:wght@400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#12030a;--panel:#1f0712;--line:rgba(236,200,140,.22);--text:#fbf1e2;--muted:rgba(251,241,226,.66);
+  --gold:#e4b84f;--rose:#ff8fa8;--field:#2a0b18;
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'Jost','Segoe UI',system-ui,sans-serif;--script:'Pinyon Script',cursive;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100%;color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.5;
+  background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(140,16,52,.45),transparent 70%),radial-gradient(ellipse 50% 40% at 0% 100%,rgba(110,34,170,.25),transparent 70%),radial-gradient(ellipse 50% 40% at 100% 100%,rgba(16,120,135,.25),transparent 70%),var(--bg);
+  background-attachment:fixed}
+.wrap{max-width:760px;margin:0 auto;padding:48px 18px 80px}
+header{text-align:center;margin-bottom:34px}
+.mark{font-family:var(--script);font-size:clamp(44px,10vw,64px);line-height:1;margin:0;color:#ffd6de}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,6vw,42px);margin:6px 0 10px;
+  background:linear-gradient(180deg,#fff4d6,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+header p{margin:0 auto;max-width:46ch;color:var(--muted)}
+.box{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01)),var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px clamp(16px,4vw,28px);margin:0 0 18px}
+h2{font-family:var(--serif);font-weight:700;font-size:26px;margin:0 0 14px;color:#ffe9b0}
+label{display:block;font-weight:500;font-size:15px;margin:0 0 14px}
+label > span.help{display:block;font-weight:400;color:var(--muted);font-size:14px;margin-top:2px}
+input[type=text],input[type=number],select,textarea{display:block;width:100%;margin-top:6px;padding:11px 13px;border-radius:10px;border:1px solid var(--line);
+  background:var(--field);color:var(--text);font:inherit;font-size:16px}
+textarea{resize:vertical;min-height:180px;line-height:1.55}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:transparent}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+@media (max-width:560px){.row2{grid-template-columns:1fr}}
+fieldset{border:0;padding:0;margin:4px 0 0}
+legend{font-weight:500;font-size:15px;margin-bottom:8px;padding:0}
+.choice{display:inline-flex;align-items:center;gap:8px;margin:0 18px 6px 0;font-weight:400;cursor:pointer}
+.choice input{accent-color:var(--gold);width:18px;height:18px}
+.themes{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:8px}
+@media (max-width:560px){.themes{grid-template-columns:repeat(2,1fr)}}
+.theme{position:relative;cursor:pointer;margin:0}
+.theme input{position:absolute;opacity:0;pointer-events:none}
+.theme span{display:block;border-radius:12px;padding:12px 10px;text-align:center;font-size:14px;border:2px solid transparent;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+.theme input:checked + span{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.18)}
+.theme input:focus-visible + span{outline:2px solid var(--gold);outline-offset:3px}
+.t-royal{background:linear-gradient(135deg,#7b30bf,#3d1066 60%,#e4b84f)}
+.t-ocean{background:linear-gradient(135deg,#14a0ad,#074a60 60%,#cfe9ea)}
+.t-rose{background:linear-gradient(135deg,#e8679a,#8a1c4a 60%,#e0a96d)}
+.t-emerald{background:linear-gradient(135deg,#1aa874,#08452f 60%,#d4af37)}
+.person h2 .who{font-family:var(--script);font-weight:400;font-size:34px;color:#ffd6de}
+.actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:22px 0 0}
+button,.linkbtn{appearance:none;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:16px;padding:13px 24px;border-radius:999px;text-decoration:none;display:inline-block}
+.primary{color:#2a0510;background:linear-gradient(135deg,#ffe3a3,var(--gold) 45%,var(--rose));box-shadow:0 10px 30px rgba(255,77,109,.3)}
+.ghost{color:var(--text);background:transparent;border:1px solid var(--line)}
+button:focus-visible,.linkbtn:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.err{color:#ffb3c1;font-size:14px;margin:-6px 0 12px;min-height:0}
+#out textarea{min-height:110px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;word-break:break-all}
+.meta{color:var(--muted);font-size:14px;margin:8px 0 0}
+.meta.warn{color:#ffd28a}
+.note{color:var(--muted);font-size:14px;margin:18px 0 0}
+footer{text-align:center;color:var(--muted);font-size:14px;margin-top:30px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="mark">Joyeux anniversaire</p>
+    <h1>Birthday Letter Maker 💌</h1>
+    <p>Write a letter for one or two people. You'll get a link that opens with fireworks, a sealed envelope and a scroll that unrolls with your words, plus music.</p>
+  </header>
+
+  <form id="form" novalidate>
+    <section class="box">
+      <h2>The basics</h2>
+      <div class="row2">
+        <label>Card language
+          <select id="lang"><option value="fr">Français</option><option value="en">English</option></select>
+          <span class="help">For the buttons and labels. Your letter can be in any language.</span>
+        </label>
+        <label>Age they're turning
+          <input id="age" type="number" min="1" max="999" inputmode="numeric" placeholder="25">
+          <span class="help">Becomes the particle intro and the cake candles.</span>
+        </label>
+      </div>
+      <div class="row2">
+        <label>Date shown
+          <input id="date" type="text" maxlength="60" placeholder="12 mars 2026">
+        </label>
+        <label>Line above your signature
+          <input id="fromNote" type="text" maxlength="120" placeholder="avec tout mon amour">
+        </label>
+      </div>
+      <label>Signature
+        <input id="from" type="text" maxlength="80" placeholder="Ton grand frère, Alex">
+      </label>
+      <fieldset>
+        <legend>How many people is this for?</legend>
+        <label class="choice"><input type="radio" name="count" value="1"> One person</label>
+        <label class="choice"><input type="radio" name="count" value="2" checked> Two (twins, best friends…)</label>
+      </fieldset>
+    </section>
+
+    <div id="people"></div>
+    <p class="err" id="formErr" role="alert"></p>
+
+    <div class="actions">
+      <button type="button" class="ghost" id="example">Load the example</button>
+      <button type="submit" class="primary">Generate my link ✨</button>
+    </div>
+  </form>
+
+  <section class="box" id="out" hidden>
+    <h2>Your link is ready 🎉</h2>
+    <label for="link">Send this link to them</label>
+    <textarea id="link" readonly></textarea>
+    <p class="meta" id="len"></p>
+    <div class="actions">
+      <button type="button" class="primary" id="copy">Copy link</button>
+      <a class="linkbtn ghost" id="preview" target="_blank" rel="noopener">Preview the card</a>
+    </div>
+    <p class="note">The whole letter is stored inside the link (after the <code>#</code>), so nothing is saved on a server. Anyone who has the link can read it, so only share it with the people it's for.</p>
+  </section>
+
+  <footer>Made with HTML, CSS and canvas. No frameworks, no database.</footer>
+</div>
+
+<template id="personTpl">
+  <section class="box person">
+    <h2>Letter for <span class="who">…</span></h2>
+    <label>Name
+      <input type="text" data-k="name" maxlength="30" required>
+    </label>
+    <fieldset>
+      <legend>Colors</legend>
+      <div class="themes">
+        <label class="theme"><input type="radio" data-k="theme" value="royal"><span class="t-royal">Amethyst &amp; gold</span></label>
+        <label class="theme"><input type="radio" data-k="theme" value="ocean"><span class="t-ocean">Deep sea &amp; pearl</span></label>
+        <label class="theme"><input type="radio" data-k="theme" value="rose"><span class="t-rose">Blush &amp; rose gold</span></label>
+        <label class="theme"><input type="radio" data-k="theme" value="emerald"><span class="t-emerald">Emerald &amp; gold</span></label>
+      </div>
+    </fieldset>
+    <label style="margin-top:14px">Three emojis
+      <input type="text" data-k="emojis" maxlength="40" placeholder="👑 ✨ 💜">
+      <span class="help">Separated by spaces. They float around the envelope; the first one tops the letter.</span>
+    </label>
+    <label>Greeting
+      <input type="text" data-k="greeting" maxlength="120" placeholder="Amara !! 🎉">
+    </label>
+    <label>The letter
+      <textarea data-k="body" maxlength="4000" rows="9" required></textarea>
+      <span class="help">Leave an empty line between paragraphs. Emojis are welcome; they'll animate.</span>
+    </label>
+    <label>Closing line
+      <input type="text" data-k="love" maxlength="400" placeholder="Happy birthday, queen. I'm proud of you, always. 👑💜">
+      <span class="help">Shown larger and centered, right before your signature.</span>
+    </label>
+  </section>
+</template>
+
+<script>
+(function(){
+"use strict";
+const EXAMPLE = {
+  lang:"fr", age:25, date:"12 mars 2026", fromNote:"avec tout mon amour", from:"Ton grand frère, Alex",
+  recipients:[
+    {name:"Amara",theme:"royal",emojis:["👑","✨","💜"],greeting:"Amara !! 🎉",
+     body:"25 ans aujourd'hui 😳 Je ne sais pas qui a autorisé ça, mais je veux parler au responsable.\n\nTu es drôle, généreuse, et un peu infernale quand tu veux 😂 Mais c'est exactement pour ça qu'on t'aime ❤️\n\nCette année, je te souhaite des fous rires, des voyages ✈️ et des gens vrais autour de toi. Tout ce qui est beau doit te trouver. ✨",
+     love:"Happy birthday, queen. I'm proud of you, always. 👑💜"},
+    {name:"Zoé",theme:"ocean",emojis:["🧜‍♀️","🐚","🩵"],greeting:"Zoé !! 🌊",
+     body:"25 ans. Toi. Comment c'est possible ?? 🤯\n\nTon sourire allume une pièce entière, et ton calme rassure tout le monde 😊💙 Garde ça précieusement.\n\nQue cette nouvelle année soit aussi large que l'océan et aussi brillante que la mer au soleil ☀️",
+     love:"Happy birthday, Zoé. Whatever the tide brings, I'll be right here. 🧜‍♀️💙"}
+  ]
+};
+const DEFAULT_THEMES=["royal","ocean"];
+
+/* ---------- link codec (must match index.html) ---------- */
+function b64urlFromBytes(bytes){let s="";for(let i=0;i<bytes.length;i+=0x8000)s+=String.fromCharCode.apply(null,bytes.subarray(i,i+0x8000));return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+function bytesFromB64url(s){s=s.replace(/-/g,"+").replace(/_/g,"/");while(s.length%4)s+="=";const b=atob(s),o=new Uint8Array(b.length);for(let i=0;i<b.length;i++)o[i]=b.charCodeAt(i);return o}
+async function pipeBytes(bytes,stream){return new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(stream)).arrayBuffer())}
+async function encodeData(obj){
+  const raw=new TextEncoder().encode(JSON.stringify(obj));
+  if("CompressionStream" in window){try{return "z"+b64urlFromBytes(await pipeBytes(raw,new CompressionStream("deflate-raw")))}catch(e){}}
+  return "j"+b64urlFromBytes(raw);
+}
+async function decodeData(s){
+  const kind=s[0], bytes=bytesFromB64url(s.slice(1));
+  const raw=kind==="z"?await pipeBytes(bytes,new DecompressionStream("deflate-raw")):bytes;
+  return JSON.parse(new TextDecoder().decode(raw));
+}
+
+/* ---------- build the two person blocks ---------- */
+const $=function(id){return document.getElementById(id)};
+const tpl=$("personTpl"), wrap=$("people"), blocks=[];
+for(let i=0;i<2;i++){
+  const node=tpl.content.firstElementChild.cloneNode(true);
+  node.querySelectorAll('[data-k="theme"]').forEach(function(r){r.name="theme"+i; if(r.value===DEFAULT_THEMES[i]) r.checked=true});
+  const nameInput=node.querySelector('[data-k="name"]'), who=node.querySelector(".who");
+  const updateWho=function(){who.textContent=nameInput.value.trim()||(i?"person two":"person one")};
+  nameInput.addEventListener("input",updateWho); updateWho();
+  wrap.appendChild(node); blocks.push(node);
+}
+function count(){return +document.querySelector('input[name="count"]:checked').value}
+function syncCount(){blocks[1].hidden=count()<2}
+document.querySelectorAll('input[name="count"]').forEach(function(r){r.addEventListener("change",syncCount)});
+syncCount();
+
+function field(block,k){return block.querySelector('[data-k="'+k+'"]')}
+function fill(cfg){
+  $("lang").value=cfg.lang==="en"?"en":"fr";
+  $("age").value=cfg.age||""; $("date").value=cfg.date||""; $("fromNote").value=cfg.fromNote||""; $("from").value=cfg.from||"";
+  const n=Math.min(2,Math.max(1,(cfg.recipients||[]).length));
+  document.querySelector('input[name="count"][value="'+n+'"]').checked=true; syncCount();
+  (cfg.recipients||[]).slice(0,2).forEach(function(r,i){
+    const b=blocks[i];
+    field(b,"name").value=r.name||""; field(b,"name").dispatchEvent(new Event("input"));
+    b.querySelectorAll('[data-k="theme"]').forEach(function(x){x.checked=(x.value===r.theme)});
+    field(b,"emojis").value=(r.emojis||[]).join(" ");
+    field(b,"greeting").value=r.greeting||""; field(b,"body").value=r.body||""; field(b,"love").value=r.love||"";
+  });
+}
+function collect(){
+  const recipients=[];
+  for(let i=0;i<count();i++){
+    const b=blocks[i], th=b.querySelector('[data-k="theme"]:checked');
+    recipients.push({
+      name:field(b,"name").value.trim(),
+      theme:th?th.value:DEFAULT_THEMES[i],
+      emojis:field(b,"emojis").value.trim().split(/\s+/).filter(Boolean).slice(0,3),
+      greeting:field(b,"greeting").value.trim(),
+      body:field(b,"body").value.trim(),
+      love:field(b,"love").value.trim()
+    });
+  }
+  return {lang:$("lang").value,age:parseInt($("age").value,10)||"",date:$("date").value.trim(),fromNote:$("fromNote").value.trim(),from:$("from").value.trim(),recipients:recipients};
+}
+function validate(cfg){
+  for(let i=0;i<cfg.recipients.length;i++){
+    const r=cfg.recipients[i];
+    if(!r.name){field(blocks[i],"name").focus(); return "Add a name for "+(i?"the second":"the first")+" person."}
+    if(!r.body){field(blocks[i],"body").focus(); return "Write the letter for "+r.name+"."}
+  }
+  return "";
+}
+
+$("example").addEventListener("click",function(){fill(EXAMPLE)});
+$("form").addEventListener("submit",async function(e){
+  e.preventDefault();
+  const cfg=collect(), problem=validate(cfg);
+  $("formErr").textContent=problem;
+  if(problem) return;
+  const url=new URL("index.html",location.href);
+  url.hash="d="+await encodeData(cfg);
+  const link=url.toString();
+  $("link").value=link; $("preview").href=link;
+  const len=$("len");
+  len.textContent=link.length.toLocaleString()+" characters";
+  len.className="meta";
+  if(link.length>7000){len.textContent+=". That's a long link; some chat apps may cut it. Shortening the letters helps."; len.className="meta warn"}
+  $("out").hidden=false; $("out").scrollIntoView({behavior:"smooth",block:"start"});
+});
+$("copy").addEventListener("click",async function(){
+  const btn=this, t=$("link");
+  try{await navigator.clipboard.writeText(t.value)}catch(e){t.select(); document.execCommand("copy")}
+  btn.textContent="Copied ✓"; setTimeout(function(){btn.textContent="Copy link"},1800);
+});
+
+/* Opening create.html#d=... loads that card back into the form for editing. */
+const m=location.hash.match(/[#&]d=([^&]+)/);
+if(m) decodeData(m[1]).then(fill).catch(function(){$("formErr").textContent="That link couldn't be read, so the form starts empty."});
+})();
+</script>
+</body>
+</html>
